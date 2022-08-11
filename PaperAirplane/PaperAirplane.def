@@ -1,0 +1,6 @@
+LIBRARY PaperAirplane
+
+DESCRIPTION		"PaperAirplane Layered Service Provider"
+
+EXPORTS
+	WSPStartup @1
