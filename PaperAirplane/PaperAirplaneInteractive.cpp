@@ -144,8 +144,8 @@ BOOL PaperAirplaneInteractive::Connect(PaperAirplaneConfiguration* pstConf, ULON
     u_req_inet4.source_port = sourcePort;
     u_req_inet4.source_addr_v4 = sourceAddress;
 
-    int fd = (int)socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    if (fd < 0) {
+    SOCKET fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    if (fd == (SOCKET)INVALID_HANDLE_VALUE) {
         return FALSE;
     }
 
@@ -162,8 +162,7 @@ BOOL PaperAirplaneInteractive::Connect(PaperAirplaneConfiguration* pstConf, ULON
     }
 
     for (int iTimes = 0; iTimes < 5; iTimes++) {
-        int iErr = sendto(fd, (char*)&u_req_inet4, sizeof(u_req_inet4), 0,
-            (struct sockaddr*)&destinationEP, sizeof(destinationEP));
+        int iErr = sendto(fd, (char*)&u_req_inet4, sizeof(u_req_inet4), 0, (struct sockaddr*)&destinationEP, sizeof(destinationEP));
         if (iErr < 0) {
             continue;
         }
